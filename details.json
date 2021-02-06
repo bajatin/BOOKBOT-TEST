@@ -1,0 +1,30 @@
+{
+    "color": 6555343,
+    "title": "Wild Seed",
+    "url": "https://www.goodreads.com/book/show/52318.Wild_Seed",
+    "description": "Doro is an entity who changes bodies like clothes, killing his hosts by reflex or design. He fears no one until he meets Anyanwu. Anyanwu is a shapeshifter who can absorb bullets and heal with a kiss and savage anyone who threatens her. She fears no one until she meets Doro. Together they weave a pattern of destiny (from Africa to the New World) unimaginable to mortals.",
+    "author": {
+        "name": "Octavia E. Butler",
+        "url": "https://www.goodreads.com/author/show/29535.Octavia_E_Butler",
+        "icon_url": "https://images.gr-assets.com/authors/1242244143p3/29535.jpg"
+    },
+    "thumbnail": {
+        "url": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388462753l/52318.jpg"
+    },
+    "fields": [
+        {
+            "name": "\u2b50 Avg. Rating",
+            "value": "4.21",
+            "inline": true
+        },
+        {
+            "name": "\ud83d\udcc4 Pages",
+            "value": "306 pages",
+            "inline": true
+        },
+        {
+            "name": "\u27a1\ufe0f Genres",
+            "value": "Fantasy, Science Fiction, Fiction, Speculative Fiction, Science Fiction Fantasy, Historical, Historical Fiction, Cultural, African American, Audiobook, Cultural, Africa, Novels, "
+        }
+    ]
+}
