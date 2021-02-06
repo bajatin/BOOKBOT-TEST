@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 
 
@@ -48,6 +49,17 @@ class DevCommands(commands.Cog, name='Developer Commands'):
     base_string += "\n".join([str(cog) for cog in self.bot.extensions])
     base_string += "\n```"
     await self.channel.send(base_string)
+
+  @commands.command()
+  async def announce(self,ctx, *,arg):
+    embed = discord.Embed(title='UPDATE',description=arg,colour=discord.Colour.random())
+    channel = self.bot.get_channel(807570072406982657)
+    await channel.send(embed= embed)
+
+  @commands.command()
+  async def listch(self,ctx):
+    guild = self.bot.get_channel(804867388302426132)
+    await ctx.send(guild)
 
 
 def setup(bot):

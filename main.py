@@ -4,11 +4,11 @@ import discord
 from discord.ext import commands
 
 client = commands.Bot(
-	command_prefix="!",  # Change to desired prefix
+	command_prefix="*",  # Change to desired prefix
 	case_insensitive=True  # Commands aren't case-sensitive
 )
 
-client.author_id = os.getenv("AUTHOR_ID")  # Change to your discord id!!!
+client.author_id = 702845167643787301  # Change to your discord id!!!
 
 @client.event 
 async def on_ready():  # When the client is ready

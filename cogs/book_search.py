@@ -12,23 +12,49 @@ class Book_search(commands.Cog):
 
   @commands.command(brief='Sends the goodreads link of the book',description='Sends the goodreads link of the book')
   async def grl(self, ctx, * ,book_name):
-    resource = build("customsearch", 'v1', developerKey =os.getenv('API_KEY') ).cse()
-    result = resource.list(q=book_name, cx ='466efafd8a2c95b3b').execute()
-    link = result['items'][0]['link']
+    async with ctx.typing():
+      resource = build("customsearch", 'v1', developerKey =os.getenv('API_KEY') ).cse()
+      result = resource.list(q=book_name, cx ='466efafd8a2c95b3b').execute()
+      link = result['items'][0]['link']
     await ctx.send(link)
-  
+
+
+  @grl.error
+  async def grlerror(self,ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+      embed = discord.Embed(title="❌ Error",description= "I can't read minds you know. So.... \n if it's not too much trouble do you mind writing the book name too?",
+  colour=16187392)
+      await ctx.send(embed=embed)
+    elif isinstance(error, commands.MissingPermissions):
+      embed = discord.Embed(title="❌ Error",description='The bot is missing some permissions')
+      await ctx.send(embed=embed)
+    else:
+      raise error
+
   @commands.command(brief='Sends the book details',description='Sends the book details')
   async def gr(self,ctx, *,book_name):
-    resource = build("customsearch", 'v1', developerKey =os.getenv('API_KEY') ).cse()
-    result = resource.list(q=book_name, cx ='466efafd8a2c95b3b').execute()
-    link = result['items'][0]['link']
-    dets = await book_dets(link)
-    with open('details.json', 'w+') as f:
-        json.dump(dets, f, indent=4)
+    async with ctx.typing():
+      resource = build("customsearch", 'v1', developerKey =os.getenv('API_KEY') ).cse()
+      result = resource.list(q=book_name, cx ='466efafd8a2c95b3b').execute()
+      link = result['items'][0]['link']
+      dets = await book_dets(link)
+      with open('details.json', 'w+') as f:
+          json.dump(dets, f, indent=4)
     with open('details.json', 'r') as f:
         details = json.load(f)
         the_embed = discord.Embed.from_dict(details)
         await ctx.send(embed=the_embed)
+
+  @gr.error
+  async def grerror(self,ctx,error):
+    if isinstance(error, commands.MissingRequiredArgument):
+      embed = discord.Embed(title="❌ Error",description= "I can't read minds you know. So.... \n if it's not too much trouble do you mind writing the book name too?",colour=16187392)
+      await ctx.send(embed=embed)
+    elif isinstance(error, commands.MissingPermissions):
+      embed = discord.Embed(title="❌ Error",description='The bot is missing some permissions')
+      await ctx.send(embed=embed)
+    else: 
+      raise error
 
 def setup(client):
   client.add_cog(Book_search(client))
