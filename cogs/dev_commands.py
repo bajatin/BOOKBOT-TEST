@@ -17,43 +17,43 @@ class DevCommands(commands.Cog, name='Developer Commands'):
       for extension in extensions:
         self.bot.unload_extension(cog)
         self.bot.load_extension(cog)
-      await self.channel.send('Cogs Reloaded')
+      await ctx.send('Cogs Reloaded')
     if cog in extensions:
       self.bot.unload_extension(cog)  # Unloads the cog
       self.bot.load_extension(cog)  # Loads the cog
-      await self.channel.send('Reloaded cog(s)')  # Sends a message where content='Done'
+      await ctx.send('Reloaded cog(s)')  # Sends a message where content='Done'
     else:
-      await self.channel.send('Unknown Cog')  # If the cog isn't found/loaded.
+      await ctx.send('Unknown Cog')  # If the cog isn't found/loaded.
 
   @commands.command(name="unload", aliases=['ul']) 
   async def unload(self, ctx, cog):
     extensions = self.bot.extensions
     if cog not in extensions:
-      await self.channel.send("Cog is not loaded!")
+      await ctx.send("Cog is not loaded!")
       return
     self.bot.unload_extension(cog)
-    await self.channel.send(f"`{cog}` has successfully been unloaded.")
+    await ctx.send(f"`{cog}` has successfully been unloaded.")
 
   @commands.command(name="load")
   async def load(self, ctx, cog):
     try:
       self.bot.load_extension(cog)
-      await self.channel.send(f"`{cog}` has successfully been loaded.")
+      await ctx.send(f"`{cog}` has successfully been loaded.")
     
     except commands.errors.ExtensionNotFound:
-      await self.channel.send(f"`{cog}` does not exist!")
+      await ctx.send(f"`{cog}` does not exist!")
 
   @commands.command(name="listcogs", aliases=['lc'])
   async def listcogs(self, ctx):
     base_string = "```css\n"  # Gives some styling to the list (on pc side)
     base_string += "\n".join([str(cog) for cog in self.bot.extensions])
     base_string += "\n```"
-    await self.channel.send(base_string)
+    await ctx.send(base_string)
 
   @commands.command()
   async def announce(self,ctx, *,arg):
-    embed = discord.Embed(title='UPDATE',description=arg,colour=discord.Colour.random())
-    channel = self.bot.get_channel(807570072406982657)
+    embed = discord.Embed(title='UPDATE',description=arg,colour=261327)
+    channel = self.bot.get_channel(804867388302426132)
     await channel.send(embed= embed)
 
   @commands.command()

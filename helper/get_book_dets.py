@@ -8,10 +8,8 @@ async def book_dets(book_url):
 
   if not soup:
     dets = {"title":"❌ Error","description":"Goodreads not responding or something like that. Try Again.\n If problem persists deal with it. Don't bother Allfather"}
-    with open('details.json', 'w+') as f:
-        json.dump(dets, f, indent=4)
-    return()
-  
+    return dets
+    
   book_desc = soup.find(id = "topcol")
 
   
@@ -19,32 +17,36 @@ async def book_dets(book_url):
   embed_dict["color"] = 6555343
 
   #Saves the title in the dict
-  title =  list(book_desc.find(id = 'bookTitle').stripped_strings)
-  titles = " ".join(title) if title else ""
-  #print(titles + "\n")
-  embed_dict["title"] = titles
+  if book_desc is not None:
+    title =  list(book_desc.find(id = 'bookTitle').stripped_strings)
+    titles = " ".join(title) if title else ""
+    #print(titles + "\n")
+    embed_dict["title"] = titles
 
   #Link for the book
   embed_dict["url"] = book_url
 
   #Save book description
-  blurb = book_desc.find(id = 'description')
-  if blurb is not None:
-    descri = blurb.find_all(id=re.compile("freeText"))[-1]
-    for br in descri.find_all("br"):
-      br.replace_with("\n")
-    descri = descri.text
-    # print(descri)
-    if len(descri) > 2048:
-      descri = descri[:2044]+" ..."
-    embed_dict["description"] = descri
+  if book_desc is not None:
+    blurb = book_desc.find(id = 'description')
+    if blurb is not None:
+      descri = blurb.find_all(id=re.compile("freeText"))[-1]
+      for br in descri.find_all("br"):
+        br.replace_with("\n")
+      descri = descri.text
+      # print(descri)
+      if len(descri) > 2048:
+        descri = descri[:2044]+" ..."
+      embed_dict["description"] = descri
 
   #Saves the author Name
   embed_dict["author"] = {}
-  auth_name = soup.find(class_= "bookAuthorProfile__name").a.stripped_strings
-  auth_name = " ".join(auth_name) if auth_name else ""
+  auth_name = soup.find(class_= "bookAuthorProfile__name")
   if auth_name is not None:
-    embed_dict["author"]["name"] = auth_name
+    auth_name = auth_name.a.stripped_strings
+    auth_name = " ".join(auth_name) if auth_name else ""
+    if auth_name is not None:
+      embed_dict["author"]["name"] = auth_name
 
   #Save link to goodreads author link
   auth_link = soup.find(class_= "bookAuthorProfile__name").a['href']

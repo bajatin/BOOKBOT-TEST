@@ -15,7 +15,11 @@ class Book_search(commands.Cog):
     async with ctx.typing():
       resource = build("customsearch", 'v1', developerKey =os.getenv('API_KEY') ).cse()
       result = resource.list(q=book_name, cx ='466efafd8a2c95b3b').execute()
-      link = result['items'][0]['link']
+      if "items" in result:
+        link = result['items'][0]['link']
+      else:
+        link = 'Good Job!  Even Google can\'t find this book on goodreads'
+    # print(link)
     await ctx.send(link)
 
 
@@ -36,8 +40,11 @@ class Book_search(commands.Cog):
     async with ctx.typing():
       resource = build("customsearch", 'v1', developerKey =os.getenv('API_KEY') ).cse()
       result = resource.list(q=book_name, cx ='466efafd8a2c95b3b').execute()
-      link = result['items'][0]['link']
-      dets = await book_dets(link)
+      if "items" in result:
+        link = result['items'][0]['link']
+        dets = await book_dets(link)
+      else:
+        dets = {'description':'Good Job!  Even Google can\'t find this book on goodreads'}
       with open('details.json', 'w+') as f:
           json.dump(dets, f, indent=4)
     with open('details.json', 'r') as f:

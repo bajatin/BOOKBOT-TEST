@@ -26,6 +26,7 @@ if __name__ == '__main__':  # Ensures this is the file being ran
 	for extension in extensions:
 		client.load_extension(extension)  # Loades every extension.
 
-keep_alive()  # Starts a webserver to be pinged.
 token = os.getenv("TOKEN") 
+keep_alive()  # Starts a webserver to be pinged.
+
 client.run(token)  # Starts the client
