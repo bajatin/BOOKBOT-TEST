@@ -1,5 +1,5 @@
 import os
-# from keep_alive import keep_alive
+from keep_alive import keep_alive
 import discord
 from discord.ext import commands
 
@@ -27,6 +27,6 @@ if __name__ == '__main__':  # Ensures this is the file being ran
 		client.load_extension(extension)  # Loades every extension.
 
 token = os.getenv("TOKEN") 
-# keep_alive()  # Starts a webserver to be pinged.
+keep_alive()  # Starts a webserver to be pinged.
 
 client.run(token)  # Starts the client
