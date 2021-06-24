@@ -14,7 +14,7 @@ class Book_search(commands.Cog):
   async def grl(self, ctx, * ,book_name):
     async with ctx.typing():
       resource = build("customsearch", 'v1', developerKey =os.getenv('API_KEY') ).cse()
-      result = resource.list(q=book_name, cx ='466efafd8a2c95b3b').execute()
+      result = resource.list(q=book_name, cx =os.getenv('CSE_ID')).execute()
       if "items" in result:
         link = result['items'][0]['link']
       else:
@@ -39,7 +39,7 @@ class Book_search(commands.Cog):
   async def gr(self,ctx, *,book_name):
     async with ctx.typing():
       resource = build("customsearch", 'v1', developerKey =os.getenv('API_KEY') ).cse()
-      result = resource.list(q=book_name, cx ='466efafd8a2c95b3b').execute()
+      result = resource.list(q=book_name, cx =os.getenv('CSE_ID')).execute()
       if "items" in result:
         link = result['items'][0]['link']
         dets = await book_dets(link)
