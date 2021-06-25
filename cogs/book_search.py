@@ -45,12 +45,12 @@ class Book_search(commands.Cog):
         dets = await book_dets(link)
       else:
         dets = {'description':'Good Job!  Even Google can\'t find this book on goodreads'}
-      with open('details.json', 'w+') as f:
-          json.dump(dets, f, indent=4)
-    with open('details.json', 'r') as f:
-        details = json.load(f)
-        the_embed = discord.Embed.from_dict(details)
-        await ctx.send(embed=the_embed)
+    #   with open('details.json', 'w+') as f:
+    #       json.dump(dets, f, indent=4)
+    # with open('details.json', 'r') as f:
+    #     details = json.load(f)
+      the_embed = discord.Embed.from_dict(dets)
+      await ctx.send(embed=the_embed)
 
   @gr.error
   async def grerror(self,ctx,error):

@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import requests
+import re
 import json
 
 class General_commands(commands.Cog):
@@ -24,6 +25,17 @@ class General_commands(commands.Cog):
           quote = data[0]['q'] + "\n -" + data[0]['a']
           embed = discord.Embed(title="Here to inspire 🌈", description= quote)
           await ctx.send(embed=embed)
+  
+  @commands.command(brief='Assigns the Theoretical Reader role',description='Assigns the reader role to people who get the role right')
+  async def code(self,ctx):
+      if re.search("knowledge is power",ctx.message.content,re.IGNORECASE) :
+          role = ctx.guild.get_role(595403641058492416)
+          await ctx.author.add_roles(role)
+          embed = discord.Embed(title="Welcome Reader :book:",description=f"Gave the role {role.name} to {ctx.author.mention}")
+          await ctx.send(embed=embed)
+          await ctx.message.delete()
+      else:
+          await ctx.send("Hmmm that's not right. Here's a hint: it's a 3 part code.")
 
 def setup(client):
   client.add_cog(General_commands(client))
