@@ -2,6 +2,8 @@ import os
 from keep_alive import keep_alive
 import discord
 from discord.ext import commands
+import traceback 
+import datetime
 
 client = commands.Bot(
 	command_prefix="*",  # Change to desired prefix
@@ -9,6 +11,14 @@ client = commands.Bot(
 )
 
 client.author_id = 702845167643787301  # Change to your discord id!!!
+
+@client.event
+async def on_error(event, *args, **kwargs):
+    embed = discord.Embed(title=':x: Event Error', colour=0xe74c3c) #Red
+    embed.add_field(name='Event', value=event)
+    embed.description = '```py\n%s\n```' % traceback.format_exc()
+    embed.timestamp = datetime.datetime.utcnow()
+    await client.get_channel(807570072406982657).send(embed=embed)
 
 @client.event 
 async def on_ready():  # When the client is ready
