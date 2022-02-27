@@ -50,17 +50,5 @@ class DevCommands(commands.Cog, name='Developer Commands'):
     base_string += "\n```"
     await ctx.send(base_string)
 
-  @commands.command()
-  async def announce(self,ctx, *,arg):
-    embed = discord.Embed(title='UPDATE',description=arg,colour=261327)
-    channel = self.bot.get_channel(804867388302426132)
-    await channel.send(embed= embed)
-
-  @commands.command()
-  async def listch(self,ctx):
-    guild = self.bot.get_channel(804867388302426132)
-    await ctx.send(guild)
-
-
 def setup(bot):
   bot.add_cog(DevCommands(bot))

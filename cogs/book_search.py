@@ -3,7 +3,7 @@ from discord.ext import commands
 import os
 from googleapiclient.discovery import build
 from helper.get_book_dets import book_dets
-import json
+import re
 
 class Book_search(commands.Cog):
 
@@ -11,6 +11,7 @@ class Book_search(commands.Cog):
     self.client =  client
 
   @commands.command(brief='Sends the goodreads link of the book',description='Sends the goodreads link of the book')
+  @commands.guild_only()
   async def grl(self, ctx, * ,book_name):
     async with ctx.typing():
       resource = build("customsearch", 'v1', developerKey =os.getenv('API_KEY') ).cse()
@@ -32,19 +33,26 @@ class Book_search(commands.Cog):
     elif isinstance(error, commands.MissingPermissions):
       embed = discord.Embed(title="❌ Error",description='The bot is missing some permissions')
       await ctx.send(embed=embed)
+    # elif isinstance(error, commands.NoPrivateMessage):
+    #   await self.client.get_channel(807570072406982657).send(f"{ctx.author} sent a message")
     else:
       raise error
 
   @commands.command(brief='Sends the book details',description='Sends the book details')
+  @commands.guild_only()
   async def gr(self,ctx, *,book_name):
     async with ctx.typing():
-      resource = build("customsearch", 'v1', developerKey =os.getenv('API_KEY') ).cse()
-      result = resource.list(q=book_name, cx =os.getenv('CSE_ID')).execute()
-      if "items" in result:
-        link = result['items'][0]['link']
+      if re.match("https://www.goodreads.com/book/show/*",book_name):
+        link = book_name
         dets = await book_dets(link)
       else:
-        dets = {'description':'Good Job!  Even Google can\'t find this book on goodreads'}
+          resource = build("customsearch", 'v1', developerKey =os.getenv('API_KEY') ).cse()
+          result = resource.list(q=book_name, cx =os.getenv('CSE_ID')).execute()
+          if "items" in result:
+            link = result['items'][0]['link']
+            dets = await book_dets(link)
+          else:
+            dets = {'description':'Good Job!  Even Google can\'t find this book on goodreads'}
     #   with open('details.json', 'w+') as f:
     #       json.dump(dets, f, indent=4)
     # with open('details.json', 'r') as f:
@@ -60,6 +68,8 @@ class Book_search(commands.Cog):
     elif isinstance(error, commands.MissingPermissions):
       embed = discord.Embed(title="❌ Error",description='The bot is missing some permissions')
       await ctx.send(embed=embed)
+    # elif isinstance(error, commands.NoPrivateMessage):
+    #   await self.client.get_channel(807570072406982657).send(f"{ctx.author} sent a message")
     else: 
       raise error
 

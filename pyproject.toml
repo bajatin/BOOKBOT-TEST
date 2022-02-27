@@ -11,6 +11,7 @@ apiclient = "^1.0.4"
 flask = "^1.1.2"
 google-api-python-client = "^1.12.8"
 bs4 = "^0.0.1"
+"dislash.py" = "^1.2.3"
 
 [tool.poetry.dev-dependencies]
 
