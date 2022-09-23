@@ -5,11 +5,22 @@ from googleapiclient.discovery import build
 from helper.get_book_dets import book_dets
 from dislash import *
 import re
+from helper.cal_hob import get_link
 
 class Slash_cmds(commands.Cog):
 
   def __init__(self, client):
     self.client =  client
+
+  @slash_commands.command(name='calvin',description='Sends a random calvin and hobbes comic',guild_ids= [805042403441639455,584581061271617538])
+  async def callink(self, ctx):
+    # async with ctx.typing():
+      await ctx.reply(type=5)
+      [link, year, month, day] = get_link()
+      title = f"Calvin Hobbes Issue On: {day}/{month}/{year}\n"
+      embed = discord.Embed(title = title)
+      embed.set_image(url=link)
+      await ctx.edit(embed=embed)
 
   @slash_commands.command(description='Sends the goodreads link of the book',guild_ids= [805042403441639455,584581061271617538],options=[Option("book_name","Enter book title",Type.STRING,required=True)])
   async def grl(self, ctx,*,book_name):
