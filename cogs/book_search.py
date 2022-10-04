@@ -4,6 +4,9 @@ import os
 from googleapiclient.discovery import build
 from helper.get_book_dets import book_dets
 import re
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Book_search(commands.Cog):
 

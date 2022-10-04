@@ -4,6 +4,9 @@ from discord.ext import commands
 import traceback
 import datetime
 from dislash import slash_commands
+from dotenv import load_dotenv
+
+load_dotenv()
 
 client = commands.Bot(
     command_prefix="*",  # Change to desired prefix

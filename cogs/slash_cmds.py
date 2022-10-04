@@ -6,7 +6,9 @@ from helper.get_book_dets import book_dets
 from dislash import *
 import re
 from helper.cal_hob import get_link
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class Slash_cmds(commands.Cog):
 
